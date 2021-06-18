@@ -43,22 +43,23 @@ fn median(list: &Vec<i32>) -> i32 {
 fn mode(list: &Vec<i32>) -> i32 {
     let mut sorted = list.clone();
     sorted.sort();
-    let mut mode: i32 = -1;
+    let mut most_often_value: i32 = -1;
     let mut map = HashMap::new();
-    for group in sorted.linear_group_by(|a, b| a == b) {
-        map.insert(group[0], group.len());
-        mode = match map.get(&mode) {
-            Some(last_len) => {
-                if &group.len() < last_len {
-                    mode
+    for group_of_same_value in sorted.linear_group_by(|a, b| a == b) {
+        let current_value = group_of_same_value[0];
+        map.insert(current_value, group_of_same_value.len());
+        most_often_value = match map.get(&most_often_value) {
+            Some(most_often_value_len) => {
+                if &group_of_same_value.len() < most_often_value_len {
+                    most_often_value
                 } else {
-                    group[0]
+                    current_value
                 }
             }
-            None => group[0],
+            None => current_value,
         }
     }
-    mode
+    most_often_value
 }
 
 #[cfg(test)]
