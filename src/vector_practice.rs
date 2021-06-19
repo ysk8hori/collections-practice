@@ -18,6 +18,9 @@ use std::collections::HashMap;
 /// # example #1
 ///
 pub fn mean_median_mode(list: Vec<i32>) -> (f64, i32, i32) {
+    if list.len() == 0 {
+        panic!("Specify one or more numbers.");
+    }
     let mean = mean(&list);
     let median = median(&list);
     let mode = mode(&list);
@@ -71,19 +74,16 @@ mod tests {
         assert_eq!(ret, (1.0, 1, 1));
     }
     #[test]
-    fn take_1_2_2() {
-        let ret = mean_median_mode(vec![1, 2, 2]);
-        let mean: f64 = 5.0 / 3.0;
-        let median = 2;
-        let mode = 2;
-        assert_eq!(ret, (mean, median, mode));
-    }
-    #[test]
-    fn take_9_m2_5_1_m2() {
-        let ret = mean_median_mode(vec![9, -2, 5, 1, -2]);
-        let mean: f64 = 11.0 / 5.0;
+    fn it_can_take_negative_number() {
+        let ret = mean_median_mode(vec![-2, 1, 2, -2]);
+        let mean: f64 = -1.0 / 4.0;
         let median = 1;
         let mode = -2;
         assert_eq!(ret, (mean, median, mode));
+    }
+    #[test]
+    #[should_panic(expected = "Specify one or more numbers.")]
+    fn take_none() {
+        mean_median_mode(vec![]);
     }
 }
