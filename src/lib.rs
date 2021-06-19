@@ -1,4 +1,4 @@
-mod vector_practice;
+pub mod vector_practice;
 
 #[cfg(test)]
 mod tests {
