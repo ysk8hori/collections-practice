@@ -15,26 +15,29 @@ use std::collections::HashMap;
 ///
 /// を返却する。
 ///
-/// # Panics
-///
-/// Panics if the array length were 0.
-///
 /// # Examples
 ///
 /// ## #1
 ///
 /// ```
 /// let ret = collections_practice::vector_practice::mean_median_mode(vec![-2, 1, 2, -2]);
-/// assert_eq!(ret, (-0.25, 1, -2));
+/// assert_eq!(ret, Some((-0.25, 1, -2)));
 /// ```
-pub fn mean_median_mode(list: Vec<i32>) -> (f64, i32, i32) {
+///
+/// ## Return none if the array were empty.
+///
+/// ```
+/// let ret = collections_practice::vector_practice::mean_median_mode(vec![]);
+/// assert_eq!(ret, None);
+/// ```
+pub fn mean_median_mode(list: Vec<i32>) -> Option<(f64, i32, i32)> {
     if list.len() == 0 {
-        panic!("Specify one or more numbers.");
+        return None;
     }
     let mean = mean(&list);
     let median = median(&list);
     let mode = mode(&list);
-    (mean, median, mode)
+    Some((mean, median, mode))
 }
 
 /// Given a list of integers, use a vector and return the mean (the average value).
@@ -81,7 +84,7 @@ mod tests {
     #[test]
     fn take_1_return_1_1_1() {
         let ret = mean_median_mode(vec![1]);
-        assert_eq!(ret, (1.0, 1, 1));
+        assert_eq!(ret.unwrap(), (1.0, 1, 1));
     }
     #[test]
     fn it_can_take_negative_number() {
@@ -89,11 +92,10 @@ mod tests {
         let mean: f64 = -1.0 / 4.0;
         let median = 1;
         let mode = -2;
-        assert_eq!(ret, (mean, median, mode));
+        assert_eq!(ret.unwrap(), (mean, median, mode));
     }
     #[test]
-    #[should_panic(expected = "Specify one or more numbers.")]
     fn take_none() {
-        mean_median_mode(vec![]);
+        assert_eq!(mean_median_mode(vec![]), None);
     }
 }
