@@ -15,8 +15,18 @@ use std::collections::HashMap;
 ///
 /// を返却する。
 ///
-/// # example #1
+/// # Panics
 ///
+/// Panics if the array length were 0.
+///
+/// # Examples
+///
+/// ## #1
+///
+/// ```
+/// let ret = collections_practice::vector_practice::mean_median_mode(vec![-2, 1, 2, -2]);
+/// assert_eq!(ret, (-0.25, 1, -2));
+/// ```
 pub fn mean_median_mode(list: Vec<i32>) -> (f64, i32, i32) {
     if list.len() == 0 {
         panic!("Specify one or more numbers.");
